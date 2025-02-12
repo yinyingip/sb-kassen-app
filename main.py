@@ -3,8 +3,14 @@ Streamlit testing script to test deployment on Heroku
 '''
 
 import streamlit as st
+import os
 st.title('Streamlit Turoial App')
 st.write('Testing for deployment')
+
+st.write('Testing using Heroku DATABASE_URL envi var')
+db_url = os.environ['DATABASE_URL']
+st.write(db_url[-10:])
+
 
 button1 = st.button("Click Me")
 if button1:
