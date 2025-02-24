@@ -1,1 +1,1 @@
-web: sh setup.sh && uvicorn api.main:app
+web: sh setup.sh && gunicorn -w 4 -k uvicorn.workers.UvicornWorker api.main:app
