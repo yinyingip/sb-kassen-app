@@ -3,7 +3,10 @@ Streamlit testing script to test deployment on Heroku
 '''
 
 import streamlit as st
+import requests
 import os
+apiurl = os.environ['API_URL']
+apikey = os.environ['API_KEY']
 st.title('Streamlit Turoial App')
 st.write('Testing for deployment')
 
@@ -24,6 +27,12 @@ if button2:
         st.write("Thanks. I like it too.")
     else:
         st.write("I am sad.")
+
+st.header("Check API Connection")
+buttonGET = st.button("Gonna get them all!")
+if buttonGET:
+    x = requests.get(f'{apiurl}/get_names', headers = {"API_KEY": apikey})
+    st.write(x.json())
 
 st.header("Start of the Radio Button Section")
 animal = st.radio("What animal is your favorite?",
