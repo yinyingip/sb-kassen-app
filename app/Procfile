@@ -1,1 +1,1 @@
-web: sh app/setup.sh && streamlit run app/main.py
+web: sh app/setup.sh && streamlit run app/map_app.py
