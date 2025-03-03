@@ -1,11 +1,14 @@
-from .db_utils import session, gm_shops
+from .db_utils import session, gm_shops,sb_reviews
 from sqlalchemy import select, distinct, func
 from geojson_pydantic import Feature, Polygon
 from pydantic import BaseModel, ValidationError, field_validator
+from typing import List
 import json
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 
-AREA_THRESHOLD = 5e3 * 5e3
+AREA_THRESHOLD = 10e3 * 10e3
 RESULT_THRESHOLD = 50
 
 def get_area(area_json_str):
@@ -30,7 +33,7 @@ def get_shop_types():
 
 default_shops = get_shop_types()
 class ShopsQuery(BaseModel):
-    shop_types: list =   default_shops
+    shop_types: List[str] =   default_shops
     area: Feature | None
     with_sb_kassen: bool = True
 
@@ -63,10 +66,60 @@ def get_shops(shop_types,area_geom,sb_kassen_filter):
         # Step 3: Execute the query
         results = session.execute(stmt).fetchall()
         results = [r._asdict() for r in results]
-        # Step 4: Print the results
+        # Step 4: Return the results
         print(f'Return {len(results)} Shops')
         return results
+    except AssertionError as e:
+        raise AssertionError(e)
     except Exception as e:
         print(e)
-        print('There is a problem when fetching the data.')
+        raise Exception('There is a db problem when fetching the data.')
+    finally:
         session.rollback()
+
+class ReviewQuery(BaseModel):
+    place_ids: List[str]
+
+def get_review_stat(place_ids):
+    try:
+        assert len(place_ids) > 0, 'Please provide at least one place_id.'
+        stmt = (select(sb_reviews.c.place_id,
+                       func.count().label('num_review'),
+                       func.max(sb_reviews.c.review_date).label('latest_review_date')
+                       )
+            .where(sb_reviews.c.verif == 'SB')
+            .group_by(sb_reviews.c.place_id)
+        )
+        # Step 3: Execute the query
+        results = session.execute(stmt).fetchall()
+        results = [r._asdict() for r in results]
+        for i in range(len(results)):
+            rel_dt = relative_date_from_now(results[i]['latest_review_date'])
+            results[i]['latest_review_relative_date'] = rel_dt
+        # Step 4: Reformatting the list to a dictionary and return the results
+        result_dict = {item['place_id']: {
+                    'num_review': item['num_review'],
+                    'latest_review_date': item['latest_review_date'],
+                    'latest_review_relative_date': item['latest_review_relative_date']
+                  } for item in results}
+        return result_dict
+    except AssertionError as e:
+        raise AssertionError(e)
+    except Exception as e:
+        print(e)
+        raise Exception('There is a db problem when fetching the data.')
+    finally:
+        session.rollback()
+
+
+def relative_date_from_now(dt_isoformat):
+    rel_date_del = relativedelta(datetime.now(), dt_isoformat)
+    if rel_date_del.months > 0:
+        time_int = rel_date_del.months
+        time_unit = 'month'
+    elif rel_date_del.days > 0:
+        time_int = rel_date_del.days
+        time_unit = 'day'
+    else:
+        return 'today'
+    return f'{time_int} {time_unit}{'s' if time_int != 1 else ''} ago'

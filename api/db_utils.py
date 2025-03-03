@@ -18,3 +18,4 @@ metadata = MetaData()
 # alternatives?
 metadata.reflect(bind=engine)
 gm_shops = metadata.tables['gm_shops']
+sb_reviews = metadata.tables['sb_reviews']

@@ -1,6 +1,10 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from .auth import get_api_key
-from .api_utils import get_shop_types, get_shops, ShopsQuery
+from .api_utils import (get_shop_types, 
+                        get_shops, 
+                        ShopsQuery, 
+                        get_review_stat, 
+                        ReviewQuery)
 
 desc = '''
 Here's where magic happens (if any).
@@ -27,14 +31,22 @@ def post_shops(input:ShopsQuery):
                            input.area.geometry.model_dump(),
                            input.with_sb_kassen
                            )
-        
-        # return {"Hello": input.shop_types,
-        #         # model_dump transform the class into dict
-        #         # "Area": input.area.model_dump().get('geometry').get('coordinates'),
-        #         "Area": input.area.geometry.model_dump(),
-        #         "SB Kassen Filter": input.with_sb_kassen
-        #         }
         return result
-    except Exception as e:
+    except AssertionError as e:
         print(e)
         print(' Something goes wrong')
+        raise HTTPException(status_code=400, detail=f'Bad Request: {e}')
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Internal Server Error')
+
+@app.post("/reviews")
+def post_shops(input:ReviewQuery):
+    try:
+        result = get_review_stat(input.place_ids)
+        return result
+    except AssertionError as e:
+        print(e)
+        print(' Something goes wrong')
+        raise HTTPException(status_code=400, detail=f'Bad Request: {e}')
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Internal Server Error')
