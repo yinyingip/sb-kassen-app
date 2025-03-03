@@ -41,7 +41,7 @@ if "drawings" not in st.session_state:
 x = requests.get(f'{apiurl}/get_names', headers = {"API_KEY": apikey})
 shops = x.json()
 
-icon_fp = "./shop_logo/custom/{}".format
+icon_fp = "./app/shop_logo/custom/{}".format
 icon_f = {'REWE':'rewe.png',
            'PENNY':'penny.png',
            'ALDI SÜD':'aldi.png',
