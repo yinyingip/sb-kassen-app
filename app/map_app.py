@@ -6,6 +6,11 @@ import requests
 import os
 apiurl = os.environ['API_URL']
 apikey = os.environ['API_KEY']
+
+st.set_page_config(
+        page_title="Munich Self-Checkout Finder",
+        page_icon="shopping_trolley"
+    )
 st.title('Munich Self-Checkout Finder: Shop Smarter, Not Harder!')
 intro_md = '''
 Welcome to the **Munich Self-Checkout Finder**, your go-to web app for discovering shops with self-checkout options across the city!
