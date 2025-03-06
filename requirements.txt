@@ -1,4 +1,4 @@
-streamlit == 1.38.0
+streamlit == 1.43.0
 fastapi[all] == 0.115.8
 gunicorn == 23.0.0
 SQLAlchemy == 2.0.35 
