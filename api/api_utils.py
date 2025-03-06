@@ -112,14 +112,20 @@ def get_review_stat(place_ids):
         session.rollback()
 
 
-def relative_date_from_now(dt_isoformat):
+def relative_date_from_now(dt_isoformat, lang):
     rel_date_del = relativedelta(datetime.now(), dt_isoformat)
+    assert lang in ['de','en'], 'Unsupport Language.'
+    time_unit = {'de':{'month':'Monat','day':'Tag','today':'heute'},
+                 'en':{'month':'month','day':'day','today':'today'}
+                 }
     if rel_date_del.months > 0:
         time_int = rel_date_del.months
-        time_unit = 'month'
+        time_unit = time_unit[lang]['month']
     elif rel_date_del.days > 0:
         time_int = rel_date_del.days
-        time_unit = 'day'
+        time_unit = time_unit[lang]['day']
     else:
-        return 'today'
+        return time_unit[lang]['today']
+    if lang == 'de':
+        return f'vor {time_int} {time_unit}{'en' if time_int != 1 else ''}'
     return f'{time_int} {time_unit}{'s' if time_int != 1 else ''} ago'
