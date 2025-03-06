@@ -94,8 +94,9 @@ def get_review_stat(place_ids):
         results = session.execute(stmt).fetchall()
         results = [r._asdict() for r in results]
         for i in range(len(results)):
-            rel_dt = relative_date_from_now(results[i]['latest_review_date'])
-            results[i]['latest_review_relative_date'] = rel_dt
+            rel_dt_de = relative_date_from_now(results[i]['latest_review_date'],'de')
+            rel_dt_en = relative_date_from_now(results[i]['latest_review_date'],'en')
+            results[i]['latest_review_relative_date'] = {'de':rel_dt_de,'en':rel_dt_en}
         # Step 4: Reformatting the list to a dictionary and return the results
         result_dict = {item['place_id']: {
                     'num_review': item['num_review'],
