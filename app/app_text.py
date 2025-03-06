@@ -38,7 +38,7 @@ popup_html_de = """
 <h1>{}</h1><br>
 <p>
 Adresse: {}<br></p>
-<p><b>{} Bewertung{}</b> erwähnte{} Erfahrungen mit dem SB-Kassen.<br> 
+<p><b>{} Bewertung{}</b> erwähnte{} Erfahrungen mit SB-Kassen.<br> 
 Die neueste Bewertung ist <b>{}</b>.<br></p>
 <p><a href="{}" target="_blank">Gehe zu Google Maps</a>
 </p>""".format
