@@ -8,6 +8,11 @@ from app_text import app_text
 apiurl = os.environ['API_URL']
 apikey = os.environ['API_KEY']
 
+st.set_page_config(
+        page_title="München SB-Kassen Finder | Munich Self-Checkout Finder",
+        page_icon="shopping_trolley"
+    )
+
 _, _, col = st.columns([3,2,1])
 options = ["DE", "EN"]
 lang = col.segmented_control("Languages", options, selection_mode="single",default = options[0], label_visibility="collapsed").lower()
