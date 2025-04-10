@@ -3,6 +3,7 @@ fastapi[all] == 0.115.8
 gunicorn == 23.0.0
 SQLAlchemy == 2.0.35 
 psycopg2 == 2.9.9
+pytest == 8.3.5
 geojson-pydantic == 1.2.0
 folium == 0.17.0
 streamlit-folium == 0.22.0 
