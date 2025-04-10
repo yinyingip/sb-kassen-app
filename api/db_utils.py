@@ -2,8 +2,8 @@ from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
 import os
 
-conn_str = os.environ['DATABASE_URL']
-conn_str = conn_str.replace('postgres','postgresql+psycopg2')
+conn_str = os.environ["DATABASE_URL"]
+conn_str = conn_str.replace("postgres", "postgresql+psycopg2")
 
 print(conn_str)
 
@@ -14,8 +14,8 @@ session = Session()
 metadata = MetaData()
 
 # Step 3: Reflect the existing gm_shops table
-#gm_shops = Table('gm_shops', metadata, autoload_with=engine)
+# gm_shops = Table('gm_shops', metadata, autoload_with=engine)
 # alternatives?
 metadata.reflect(bind=engine)
-gm_shops = metadata.tables['gm_shops']
-sb_reviews = metadata.tables['sb_reviews']
+gm_shops = metadata.tables["gm_shops"]
+sb_reviews = metadata.tables["sb_reviews"]

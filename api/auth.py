@@ -7,7 +7,8 @@ API_KEY_NAME = "API_KEY"
 api_key_header = APIKeyHeader(name=API_KEY_NAME)
 
 # The API key you want to validate
-API_KEY = os.environ['API_KEY']
+API_KEY = os.environ["API_KEY"]
+
 
 # Dependency function to check the API key
 def get_api_key(api_key: str = Depends(api_key_header)):
