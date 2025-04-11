@@ -1,4 +1,8 @@
-# Munich Self Checkout Kassen Finder Webapp
+# Munich Self Checkout Kassen (SB Kassen) Finder Webapp
+
+*Wo gibt es REWE SB Kassen?*
+
+Discover shops with self checkout near you!
 
 ![snippet](https://github.com/yinyingip/sb-kassen-app/blob/main/snippet.png)
 
