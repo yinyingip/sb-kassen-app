@@ -1,4 +1,4 @@
-# Munich Self-Checkout Finder Webapp
+# Munich Self Checkout Kassen Finder Webapp
 
 ![snippet](https://github.com/yinyingip/sb-kassen-app/blob/main/snippet.png)
 
