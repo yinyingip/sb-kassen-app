@@ -2,9 +2,11 @@
 
 *Wo gibt es REWE SB Kassen?*
 
+⚠️ Webapp is currently offline!
+
 Discover shops with self checkout near you!
 
-![snippet](https://github.com/yinyingip/sb-kassen-app/blob/main/snippet.png)
+![snippet](https://github.com/yinyingip/sb-kassen-app/blob/main/snippet_with_shops.png)
 
 ## Technologies
 ```mermaid
